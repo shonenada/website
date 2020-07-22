@@ -133,8 +133,8 @@ Use the following commands to install Docker on your system:
 
 使用以下命令在您的系统上安装 Docker：
 
-{{< tabs name="tab-cri-docker-installation" >}}
-{{< tab name="Ubuntu 16.04+" codelang="bash" >}}
+{{% tabs name="tab-cri-docker-installation" %}}
+{{% tab name="Ubuntu 16.04+" %}}
 <!--
 # Install Docker CE
 ## Set up the repository:
@@ -145,15 +145,18 @@ apt-get update && apt-get install \
 ### Add Docker’s official GPG key
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 -->
+```shell
 # 安装 Docker CE
 ## 设置仓库
 ### 安装软件包以允许 apt 通过 HTTPS 使用存储库
 apt-get update && apt-get install \
   apt-transport-https ca-certificates curl software-properties-common
+```
 
+```shell
 ### 新增 Docker 的 官方 GPG 秘钥
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-
+```
 <!--
 ### Add Docker apt repository.
 add-apt-repository \
@@ -181,15 +184,23 @@ EOF
 
 mkdir -p /etc/systemd/system/docker.service.d
 -->
+```shell
 ### 添加 Docker apt 仓库
 add-apt-repository \
   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) \
   stable"
+```
 
+```shell
 ## 安装 Docker CE
-apt-get update && apt-get install docker-ce=18.06.2~ce~3-0~ubuntu
+apt-get update && apt-get install -y\
+  containerd.io=1.2.13-2 \
+  docker-ce=5:19.03.11~3-0~ubuntu-$(lsb_release -cs) \
+  docker-ce-cli=5:19.03.11~3-0~ubuntu-$(lsb_release -cs)
+```
 
+```shell
 # 设置 daemon
 cat > /etc/docker/daemon.json <<EOF
 {
@@ -201,19 +212,23 @@ cat > /etc/docker/daemon.json <<EOF
   "storage-driver": "overlay2"
 }
 EOF
+```
 
+```shell
 mkdir -p /etc/systemd/system/docker.service.d
-
+```
 <!--
 # Restart docker.
 systemctl daemon-reload
 systemctl restart docker
 -->
+```shell
 # 重启 docker.
 systemctl daemon-reload
 systemctl restart docker
-{{< /tab >}}
-{{< tab name="CentOS/RHEL 7.4+" codelang="bash" >}}
+```
+{{% /tab %}}
+{{% tab name="CentOS/RHEL 7.4+" %}}
 
 <!--
 # Install Docker CE
@@ -252,22 +267,31 @@ EOF
 
 mkdir -p /etc/systemd/system/docker.service.d
 -->
+```shell
 # 安装 Docker CE
 ## 设置仓库
 ### 安装所需包
 yum install yum-utils device-mapper-persistent-data lvm2
+```
 
+```shell
 ### 新增 Docker 仓库。
 yum-config-manager \
   --add-repo \
   https://download.docker.com/linux/centos/docker-ce.repo
+```
 
+```shell
 ## 安装 Docker CE.
 yum update && yum install docker-ce-18.06.2.ce
+```
 
+```shell
 ## 创建 /etc/docker 目录。
 mkdir /etc/docker
+```
 
+```shell
 # 设置 daemon。
 cat > /etc/docker/daemon.json <<EOF
 {
@@ -282,19 +306,23 @@ cat > /etc/docker/daemon.json <<EOF
   ]
 }
 EOF
+```
 
+```shell
 mkdir -p /etc/systemd/system/docker.service.d
-
+```
 <!--
 # Restart Docker
 systemctl daemon-reload
 systemctl restart docker
 -->
+```shell
 # 重启 Docker
 systemctl daemon-reload
 systemctl restart docker
-{{< /tab >}}
-{{< /tabs >}}
+```
+{{% /tab %}}
+{{% /tabs %}}
 
 <!--
 Refer to the [official Docker installation guides](https://docs.docker.com/engine/installation/)
@@ -349,7 +377,7 @@ sysctl --system
 ```
 
 {{< tabs name="tab-cri-cri-o-installation" >}}
-{{< tab name="Ubuntu 16.04" codelang="bash" >}}
+{{< tab name="Ubuntu 16.04" >}}
 
 <!--
 # Install prerequisites
@@ -362,6 +390,7 @@ apt-get update
 # Install CRI-O
 apt-get install cri-o-1.15
 -->
+```shell
 # 安装必备软件
 apt-get update
 apt-get install software-properties-common
@@ -371,7 +400,7 @@ apt-get update
 
 # 安装 CRI-O
 apt-get install cri-o-1.15
-
+```
 {{< /tab >}}
 {{< tab name="CentOS/RHEL 7.4+" codelang="bash" >}}
 
